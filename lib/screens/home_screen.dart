@@ -67,7 +67,6 @@ class HomeScreen extends StatelessWidget {
 
                     ElevatedButton(
                       onPressed: () {
-                         print("Sign In button pressed");
                         Navigator.push(
                          
                           context,
