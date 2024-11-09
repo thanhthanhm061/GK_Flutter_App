@@ -11,22 +11,22 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Hình ảnh con gái ở góc dưới bên trái
+          
           Positioned(
             bottom: 0,
             left: 0,
             child: Image.asset(
-              'assets/background.png', // Đường dẫn đến hình ảnh
-              width: 380, // Đặt kích thước phù hợp cho ảnh
+              'assets/background.png', 
+              width: 380, 
               fit: BoxFit.cover,
             ),
           ),
-          // Nội dung chính của màn hình
+          
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/spotify_logo.png'), // Logo Spotify
+                Image.asset('assets/spotify_logo.png'), 
                 const SizedBox(height: 20),
                 const Text(
                   'Enjoy Listening To Music',
