@@ -3,7 +3,7 @@ import 'package:flutter_api/screens/music_page.dart';
 import 'package:flutter_api/screens/track_list_screen.dart';
 import 'package:flutter_api/services/api_service.dart';
 import 'package:flutter_api/services/modeltrack.dart';
-
+import 'login.dart';
 
 class HomePage extends StatelessWidget {
   final ApiService apiService = ApiService();
@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/Spotify.png', height: 30),
+            Image.asset('assets/spotify_logo.png', height: 30),
           ],
         ),
         actions: const [Icon(Icons.more_vert, color: Colors.white)],
@@ -96,12 +96,12 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MusicPage(songTitle: "Bad Guy", artistName: "Billie Eilish")),
+                          MaterialPageRoute(builder: (context) => const MusicPage(songTitle: "Bad Guy", artistName: "Billie Eilish")),
                         );
                       },
                       child: Column(
                         children: [
-                          Image.asset('assets/images/Badgirl.png', height: 100, width: 100),
+                          Image.asset('assets/drake.png', height: 100, width: 100),
                           const SizedBox(height: 8),
                           const Text('Bad Guy', style: TextStyle(color: Colors.white, fontSize: 14)),
                           const Text('Billie Eilish', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -113,12 +113,12 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MusicPage(songTitle: "Scorpion", artistName: "Drake")),
+                          MaterialPageRoute(builder: (context) => const MusicPage(songTitle: "Scorpion", artistName: "Drake")),
                         );
                       },
                       child: Column(
                         children: [
-                          Image.asset('assets/images/anhdaden.png', height: 100, width: 100),
+                          Image.asset('assets/drake.png', height: 100, width: 100),
                           const SizedBox(height: 8),
                           const Text('Scorpion', style: TextStyle(color: Colors.white, fontSize: 14)),
                           const Text('Drake', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -196,11 +196,11 @@ class HomePage extends StatelessWidget {
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed, 
-        items: [
-          const BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ''),
-          const BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
         ],
       ),
     );

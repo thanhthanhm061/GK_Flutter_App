@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_api/services/api_service.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  RegisterPage({super.key});
+
+  // Khai báo các controller
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Hàm đăng ký người dùng
+  void _registerUser(BuildContext context, String email, String password, String fullName) async {
+    try {
+      final apiService = ApiService();
+      // Gọi API đăng ký
+      final response = await apiService.register(email, password);
+
+      // In kết quả đăng ký
+      print('Đăng ký thành công: $response');
+
+      // Hiển thị thông báo thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Đăng ký thành công!')),
+      );
+
+      // Điều hướng đến màn hình đăng nhập
+      Navigator.pushNamed(context, '/signin');
+    } catch (e) {
+      print('Lỗi: $e');
+
+      // Hiển thị thông báo lỗi cho người dùng
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng ký thất bại: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +45,7 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/Spotify.png'), // Add Spotify logo asset
+            Image.asset('assets/spotify_logo.png'), // Add Spotify logo asset
             const SizedBox(height: 20),
             const Text(
               'Register',
@@ -32,6 +65,7 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
+              controller: _fullNameController,
               decoration: InputDecoration(
                 hintText: 'Full Name',
                 hintStyle: const TextStyle(color: Colors.grey),
@@ -43,6 +77,7 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 hintText: 'Enter Email',
                 hintStyle: const TextStyle(color: Colors.grey),
@@ -54,6 +89,7 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Password',
@@ -67,7 +103,20 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                final email = _emailController.text.trim();
+                final password = _passwordController.text.trim();
+                final fullName = _fullNameController.text.trim();
+
+                if (email.isEmpty || password.isEmpty || fullName.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please fill all fields')),
+                  );
+                  return;
+                }
+
+                _registerUser(context, email, password, fullName);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 minimumSize: const Size(double.infinity, 50),
@@ -87,7 +136,7 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/signin'); // Điều hướng đến màn hình đăng nhập
               },
               child: const Text(
                 'Do You Have An Account? Sign In',

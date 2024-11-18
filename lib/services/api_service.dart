@@ -1,34 +1,59 @@
 import 'dart:convert';
-import 'package:flutter_api/services/modeltrack.dart';
 import 'package:http/http.dart' as http;
 
-
 class ApiService {
-  final String apiUrl = 'https://gk-flutter-app-api.onrender.com/api/products'; 
+  final String baseUrl = "https://gk-flutter-app-api.onrender.com/api";
 
-  Future<List<Track>> fetchTracks() async {
-  final response = await http.get(Uri.parse(apiUrl));
+  // API Đăng ký
+  Future<Map<String, dynamic>> register(String email, String password) async {
+    final url = Uri.parse('$baseUrl/signup');
 
-  if (response.statusCode == 200) {
-    final List<dynamic> jsonData = json.decode(response.body);
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+    );
 
-    List<Track> tracks = [];
-
-    // Kiểm tra nếu jsonData không trống và có chứa playlist
-    if (jsonData.isNotEmpty && jsonData[0]['playlists'] != null) {
-      // Truy cập vào playlist đầu tiên và lấy danh sách tracks
-      var playlist = jsonData[0]['playlists'][0];
-      var trackList = playlist['tracks'] as List<dynamic>;
-
-      // Chuyển đổi trackList thành đối tượng Track
-      tracks = trackList.map((trackJson) => Track.fromJson(trackJson)).toList();
+    if (response.statusCode == 201) {
+      return jsonDecode(response.body); // Trả về kết quả đăng ký
     } else {
-      print('No playlists or tracks available');
+      throw Exception('Đăng ký thất bại: ${response.body}');
     }
-
-    return tracks;
-  } else {
-    throw Exception('Failed to load tracks');
   }
-}
+
+  // API Đăng nhập
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    final url = Uri.parse('$baseUrl/signin');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Giải mã JSON trả về từ API
+      final data = jsonDecode(response.body);
+
+      // Xử lý dữ liệu trả về và chuyển đổi thành Map
+      return {
+        "id": data["_id"]["\$oid"], // Lấy id từ object JSON
+        "username": data["username"],
+        "email": data["email"],
+        "age": data["age"],
+        "createdAt": data["createdAt"]["\$date"], // Lấy ngày tạo
+      };
+    } else {
+      throw Exception('Đăng nhập thất bại: ${response.body}');
+    }
+  }
+
+  // Placeholder cho các API khác (nếu cần)
+  fetchTracks() {}
 }

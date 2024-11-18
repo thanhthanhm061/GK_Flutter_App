@@ -14,7 +14,7 @@ class LogInOut extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/girl1.png'), 
+                image: AssetImage('assets/girl1.png'), 
                 fit: BoxFit.cover,
               ),
             ),
@@ -24,7 +24,7 @@ class LogInOut extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center, 
               children: [
                 Image.asset(
-                  'assets/images/Spotify.png',
+                  'assets/spotify_logo.png',
                   height: 80,
                 ),
                 const SizedBox(height: 20),

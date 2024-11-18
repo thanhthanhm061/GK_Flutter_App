@@ -19,7 +19,7 @@ class MusicPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/Badgirl.png', height: 250), 
+          Image.asset('assets/drake.png', height: 250), 
           const SizedBox(height: 20),
           Text(
             songTitle,

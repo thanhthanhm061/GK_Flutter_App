@@ -37,7 +37,7 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/Spotify.png', 
+                'assets/spotify_logo.png', 
                 height: 80,
               ),
               const SizedBox(height: 20),

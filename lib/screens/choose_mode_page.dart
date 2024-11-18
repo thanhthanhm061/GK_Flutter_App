@@ -21,7 +21,7 @@ class _ChooseModePageState extends State<ChooseModePage> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/girl2.png'),
+                image: AssetImage('assets/girl2.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -30,7 +30,7 @@ class _ChooseModePageState extends State<ChooseModePage> {
             children: [
               const SizedBox(height: 60), 
               Image.asset(
-                'assets/images/Spotify.png',
+                'assets/spotify_logo.png',
                 height: 80,
               ),
               const Spacer(),

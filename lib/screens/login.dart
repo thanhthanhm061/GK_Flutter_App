@@ -1,8 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api/screens/home_page.dart';
+import 'package:flutter_api/services/api_service.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  // Khai báo controller cho các TextField
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Hàm xử lý đăng nhập
+  void _loginUser(BuildContext context, String email, String password) async {
+    try {
+      final apiService = ApiService();
+      // Gọi API đăng nhập
+      final response = await apiService.login(email, password);
+
+      // Hiển thị thông báo đăng nhập thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Đăng nhập thành công!')),
+      );
+
+      // Điều hướng đến HomePage nếu đăng nhập thành công
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  HomePage()),
+      );
+
+      // In thông tin trả về từ API (nếu cần)
+      print('Thông tin người dùng: $response');
+    } catch (e) {
+      // Xử lý lỗi khi đăng nhập thất bại
+      print('Lỗi đăng nhập: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng nhập thất bại: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +47,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/Spotify.png'), // Add Spotify logo asset
+            Image.asset('assets/spotify_logo.png'), // Logo Spotify
             const SizedBox(height: 20),
             const Text(
               'Sign In',
@@ -33,6 +67,7 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 hintText: 'Enter Username Or Email',
                 hintStyle: const TextStyle(color: Colors.grey),
@@ -44,6 +79,7 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Password',
@@ -66,8 +102,19 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => HomePage()));
+                final email = _emailController.text.trim();
+                final password = _passwordController.text.trim();
+
+                if (email.isEmpty || password.isEmpty) {
+                  // Kiểm tra nếu người dùng để trống email hoặc mật khẩu
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Vui lòng nhập email và mật khẩu')),
+                  );
+                  return;
+                }
+
+                // Gọi hàm đăng nhập
+                _loginUser(context, email, password);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -80,15 +127,15 @@ class LoginPage extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.android, color: Colors.white), // Use appropriate icons for Google and Apple
+                Icon(Icons.android, color: Colors.white), // Icon cho Google
                 SizedBox(width: 20),
-                Icon(Icons.apple, color: Colors.white),
+                Icon(Icons.apple, color: Colors.white), // Icon cho Apple
               ],
             ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/register'); // Chuyển hướng đến màn hình đăng ký
               },
               child: const Text(
                 'Not A Member? Register Now',

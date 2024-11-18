@@ -13,7 +13,7 @@ class GetStartedPage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/girl1.png'), 
+                image: AssetImage('assets/girl1.png'), 
                 fit: BoxFit.cover,
               ),
             ),
@@ -25,7 +25,7 @@ class GetStartedPage extends StatelessWidget {
            
               const SizedBox(height: 60),
               Image.asset(
-                'assets/images/Spotify.png',
+                'assets/spotify_logo.png',
                 height: 80,
               ),
               
